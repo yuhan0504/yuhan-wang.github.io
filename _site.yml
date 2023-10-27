@@ -11,4 +11,4 @@ navbar:
       href: https://github.com/yuhan0504/
 output:
   html_document:
-    theme: cerulean
+    theme: readable
