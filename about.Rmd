@@ -1,0 +1,37 @@
+---
+title: "About me"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# This page has information about me
+
+SUFE 23' Economic Statistics | Columbia University 25' Biostatistics | Berkeley exchange 22'
+
+## My education
+
+* Columbia University, New York, NY\
+09/2023 – Present\
+M.S. in Biostatistics, Mailman School of Public Health\
+Courses: Data Science, Biostatistical Method, Principles of Epidemiology, Probability
+
+* Shanghai University of Finance and Economics (SUFE), Shanghai, China\             
+09/2019 – 07/2023\
+B.S. in Economics Statistics, School of Statistics and Management\
+Courses: The Applied Regression Analysis, Operations Research, Computer Programming, Computational Statistics, etc
+
+* University of California, Berkeley, Berkeley, CA\					                     
+01/2022 – 05/2022\
+Exchange Student\
+Cumulative GPA: 3.93/4.0\
+Courses: Econometrics, Data Analysis, Computing with data (R programming), Financial analysis
+
+## My experience
+
+* Data Governance Intern Viatris, Shanghai, China, 11/2022 – 05/2023
+
+* Industry Research Intern Orient Securities, Shanghai, China, 07/2022 – 11/2022
+                   
+* Credit Research Intern for Fixed Income Team Donghai Securities, Shanghai, China, 07/2021 – 08/2021
