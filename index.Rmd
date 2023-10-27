@@ -6,7 +6,7 @@ output:
     toc_float: true
 ---
 
-# Welcome to Yuhan Wang's awesome website
+# Welcome to Yuhan Wang's awesome website!
 
 ![](images/welcome_picture.gif)
 
