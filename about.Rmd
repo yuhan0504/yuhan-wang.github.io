@@ -35,3 +35,8 @@ Courses: Econometrics, Data Analysis, Computing with data (R programming), Finan
 * Industry Research Intern Orient Securities, Shanghai, China, 07/2022 – 11/2022
                    
 * Credit Research Intern for Fixed Income Team Donghai Securities, Shanghai, China, 07/2021 – 08/2021
+
+## Skills and activities
+* Activities: SUFE Statistics and Management Committee and Student Union (Fellow); SUFE Basketball Team (Member)
+
+* Computer Skills: Stata, SPSS, SAS, R, Python, SQL and MS Office

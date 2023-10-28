@@ -1,0 +1,90 @@
+---
+title: "Flexdashboard"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# A flexdashboard about instacart
+
+Instacart is an online grocery service that allows you to shop online from local stores. In New York City, partner stores include Whole Foods, Fairway, and The Food Emporium. Instacart offers same-day delivery, and items that users purchase are delivered within 2 hours.
+
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library("p8105.datasets")
+data("instacart")
+
+instacart_clean <- instacart |>
+   mutate(
+    order_dow = case_when(
+      order_dow == 0 ~ "Monday",
+      order_dow == 1 ~ "Tuesday",
+      order_dow == 2 ~ "Wednesday",
+      order_dow == 3 ~ "Thursday",
+      order_dow == 4 ~ "Friday",
+      order_dow == 5 ~ "Saturday",
+      order_dow == 6 ~ "Sunday"
+    )
+   ) |>
+  filter(department ==	"beverages") |>
+  select(order_id, product_id, user_id, order_dow, order_hour_of_day,product_name, aisle, department,days_since_prior_order)
+
+```
+## Bar chart
+
+First, we can make a bar chart to see number of items ordered in each aisle in beverages department.
+
+```{r}
+# number of sold items in different aisles
+instacart_clean |>
+  count(aisle) |>
+  mutate(aisle = fct_reorder(aisle, n)) |> 
+  plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = "bar", colors = "viridis")
+
+```
+
+```{r}
+# popular items (number>=1000) in the bar chart
+ instacart_clean |> 
+  group_by(product_name,aisle) |>
+  summarise(items_number = n()) |>
+  arrange(desc(items_number)) |> 
+  filter(items_number >= 1000) |>
+ # mutate(product_name = factor(product_name, levels = product_name)) |>
+ # mutate(product_name = fct_reorder(product_name, items_number)) |>
+  plot_ly(x = ~product_name, y = ~items_number, color = ~aisle, type = "bar", colors = "viridis")
+
+```
+
+## Box plot
+
+We can know the number of days since the last order in different aisles from this box plot.
+
+```{r}
+# days since the last order in different aisles
+instacart_clean |> 
+  drop_na(days_since_prior_order) |>
+  mutate(aisle = fct_reorder(aisle, days_since_prior_order)) |> 
+  plot_ly(y = ~days_since_prior_order, color = ~aisle, type = "box", colors = "viridis")
+
+```
+## Point plot
+
+We can see the average order hour on different days of the week on which the order was placed. Different colors represent different aisles.
+
+```{r}
+# average order hour on different days of the week on which the order was placed
+
+days_order <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+instacart_clean %>%
+  group_by(order_dow, aisle) %>%
+  summarise(avg_order_hour = mean(order_hour_of_day)) %>%
+  mutate(text_label = str_c("Aisle: ", aisle)) %>%
+  mutate(order_dow = factor(order_dow, levels = days_order)) %>%
+  plot_ly(x = ~order_dow, y = ~avg_order_hour, type = "scatter", mode = "markers", color = ~aisle, colors = "viridis", text = ~text_label)
+```

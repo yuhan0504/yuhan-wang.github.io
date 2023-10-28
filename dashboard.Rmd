@@ -1,0 +1,74 @@
+---
+title: "Dashboard about Instacart"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library(p8105.datasets)
+```
+
+```{r}
+data("instacart")
+
+instacart_clean <- instacart |>
+   mutate(
+    order_dow = case_when(
+      order_dow == 0 ~ "Monday",
+      order_dow == 1 ~ "Tuesday",
+      order_dow == 2 ~ "Wednesday",
+      order_dow == 3 ~ "Thursday",
+      order_dow == 4 ~ "Friday",
+      order_dow == 5 ~ "Saturday",
+      order_dow == 6 ~ "Sunday"
+    )
+   ) |>
+  filter(department ==	"beverages") |>
+  select(order_id, product_id, user_id, order_dow, order_hour_of_day,product_name, aisle, department,days_since_prior_order)
+```
+
+## Column {data-width="650"}
+
+### Chart A
+
+```{r}
+# number of sold items in different aisles
+instacart_clean |>
+  count(aisle) |>
+  mutate(aisle = fct_reorder(aisle, n)) |> 
+  plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = "bar", colors = "viridis")
+```
+
+## Column {data-width="350"}
+
+### Chart B
+
+```{r}
+# days since the last order in different aisles
+instacart_clean |> 
+  drop_na(days_since_prior_order) |>
+  mutate(aisle = fct_reorder(aisle, days_since_prior_order)) |> 
+  plot_ly(y = ~days_since_prior_order, color = ~aisle, type = "box", colors = "viridis")
+```
+
+### Chart C
+
+```{r}
+# average order hour on different days of the week on which the order was placed
+
+days_order <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+instacart_clean %>%
+  group_by(order_dow, aisle) %>%
+  summarise(avg_order_hour = mean(order_hour_of_day)) %>%
+  mutate(text_label = str_c("Aisle: ", aisle)) %>%
+  mutate(order_dow = factor(order_dow, levels = days_order)) %>%
+  plot_ly(x = ~order_dow, y = ~avg_order_hour, type = "scatter", mode = "markers", color = ~aisle, colors = "viridis", text = ~text_label)
+```
