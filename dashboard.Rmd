@@ -34,7 +34,9 @@ instacart_clean <- instacart |>
   select(order_id, product_id, user_id, order_dow, order_hour_of_day,product_name, aisle, department,days_since_prior_order)
 ```
 
-## Column {data-width="500"}
+
+Column {data-width=500}
+--------------------------------------------------------------------
 
 ### Chart A
 
@@ -46,7 +48,9 @@ instacart_clean |>
   plot_ly(x = ~aisle, y = ~n, color = ~aisle, type = "bar", colors = "viridis")
 ```
 
-## Column {data-width="500"}
+
+Column {data-width=500}
+--------------------------------------------------------------------
 
 ### Chart B
 
